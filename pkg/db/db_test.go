@@ -1,6 +1,6 @@
 // test file for db.go
 
-package main
+package db
 
 import "testing"
 

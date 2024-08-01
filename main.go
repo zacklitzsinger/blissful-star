@@ -1,11 +1,13 @@
 package main
 
 import (
+	"go-db/pkg/db"
+
 	"github.com/abiosoft/ishell/v2"
 )
 
 func main() {
-	db := Connect()
+	mockDB := db.Connect()
 	shell := ishell.New()
 
 	shell.Println("Welcome! This is a simple key-value store.")
@@ -17,7 +19,7 @@ func main() {
 		Func: func(c *ishell.Context) {
 			key := c.Args[0]
 			value := c.Args[1]
-			db.Create(key, value)
+			mockDB.Create(key, value)
 			shell.Printf("Created %s = %s", key, value)
 			shell.Println()
 		},
@@ -27,7 +29,7 @@ func main() {
 		Help: "get a kv pair",
 		Func: func(c *ishell.Context) {
 			key := c.Args[0]
-			shell.Printf("Got %s = %s", key, db.Get(key))
+			shell.Printf("Got %s = %s", key, mockDB.Get(key))
 			shell.Println()
 		},
 	})
@@ -37,7 +39,7 @@ func main() {
 		Func: func(c *ishell.Context) {
 			key := c.Args[0]
 			value := c.Args[1]
-			db.Update(key, value)
+			mockDB.Update(key, value)
 			shell.Printf("Updated %s = %s", key, value)
 			shell.Println()
 		},
@@ -47,7 +49,7 @@ func main() {
 		Help: "delete a kv pair",
 		Func: func(c *ishell.Context) {
 			key := c.Args[0]
-			db.Delete(key)
+			mockDB.Delete(key)
 			shell.Printf("Deleted %s", key)
 			shell.Println()
 		},
