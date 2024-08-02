@@ -18,9 +18,7 @@ func main() {
 		Func: func(c *ishell.Context) {
 			key := c.Args[0]
 			value := c.Args[1]
-			// TODO: Implement the set command
-			shell.Printf("Set %s = %s", key, value)
-			shell.Println()
+			kv.Set(key, value)
 		},
 	})
 	shell.AddCmd(&ishell.Cmd{
@@ -28,19 +26,17 @@ func main() {
 		Help: "get a kv pair",
 		Func: func(c *ishell.Context) {
 			key := c.Args[0]
-			// TODO: Implement the get command
-			shell.Printf("Got %s = %s", key, kv.Get(key))
+			value := kv.Get(key)
+			shell.Printf(value)
 			shell.Println()
 		},
 	})
 	shell.AddCmd(&ishell.Cmd{
-		Name: "delete",
-		Help: "delete a kv pair",
+		Name: "unset",
+		Help: "unset a kv pair",
 		Func: func(c *ishell.Context) {
 			key := c.Args[0]
-			// TODO: Implement the delete command
-			shell.Printf("Deleted %s", key)
-			shell.Println()
+			kv.Unset(key)
 		},
 	})
 

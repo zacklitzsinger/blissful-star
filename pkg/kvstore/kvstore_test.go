@@ -11,10 +11,10 @@ func TestSet(t *testing.T) {
 	}
 }
 
-func TestDelete(t *testing.T) {
+func TestUnset(t *testing.T) {
 	kv := CreateKV()
 	kv.Set("some", "thing")
-	kv.Delete("some")
+	kv.Unset("some")
 
 	if kv.Get("some") != "" {
 		t.Error("Delete failed")
@@ -24,16 +24,14 @@ func TestDelete(t *testing.T) {
 func TestSetExisting(t *testing.T) {
 	kv := CreateKV()
 	kv.Set("some", "thing")
+	kv.Set("some", "other")
 
-	if kv.Get("some") != "thing" {
+	if kv.Get("some") != "other" {
 		t.Error("Set failed")
 	}
 }
 
 func TestDeleteNonExisting(t *testing.T) {
 	kv := CreateKV()
-
-	if err := kv.Delete("some"); err == nil {
-		t.Error("DeleteNonExisting failed")
-	}
+	kv.Unset("some")
 }
