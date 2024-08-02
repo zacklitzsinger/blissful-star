@@ -1,26 +1,25 @@
 package main
 
 import (
-	"go-db/pkg/db"
+	"go-example/pkg/kvstore"
 
 	"github.com/abiosoft/ishell/v2"
 )
 
 func main() {
-	mockDB := db.Connect()
+	kv := kvstore.CreateKV()
 	shell := ishell.New()
 
 	shell.Println("Welcome! This is a simple key-value store.")
 
-	// register a function for "greet" command.
 	shell.AddCmd(&ishell.Cmd{
-		Name: "create",
-		Help: "create a kv pair",
+		Name: "set",
+		Help: "set a kv pair",
 		Func: func(c *ishell.Context) {
 			key := c.Args[0]
 			value := c.Args[1]
-			mockDB.Create(key, value)
-			shell.Printf("Created %s = %s", key, value)
+			// TODO: Implement the set command
+			shell.Printf("Set %s = %s", key, value)
 			shell.Println()
 		},
 	})
@@ -29,18 +28,8 @@ func main() {
 		Help: "get a kv pair",
 		Func: func(c *ishell.Context) {
 			key := c.Args[0]
-			shell.Printf("Got %s = %s", key, mockDB.Get(key))
-			shell.Println()
-		},
-	})
-	shell.AddCmd(&ishell.Cmd{
-		Name: "update",
-		Help: "update a kv pair",
-		Func: func(c *ishell.Context) {
-			key := c.Args[0]
-			value := c.Args[1]
-			mockDB.Update(key, value)
-			shell.Printf("Updated %s = %s", key, value)
+			// TODO: Implement the get command
+			shell.Printf("Got %s = %s", key, kv.Get(key))
 			shell.Println()
 		},
 	})
@@ -49,7 +38,7 @@ func main() {
 		Help: "delete a kv pair",
 		Func: func(c *ishell.Context) {
 			key := c.Args[0]
-			mockDB.Delete(key)
+			// TODO: Implement the delete command
 			shell.Printf("Deleted %s", key)
 			shell.Println()
 		},
